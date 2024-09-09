@@ -11,7 +11,7 @@ make == 4.3-4.1build2
 Для создания среды разработки:
 - make devenv
 
-URLS документация:
-http://127.0.0.1:8002/api/docs
-http://127.0.0.1:8002/api/redocs
-http://127.0.0.1:8002/api/docs/openapi.json
+# URLS документация:
+- http://127.0.0.1:8002/api/docs
+- http://127.0.0.1:8002/api/redocs
+- http://127.0.0.1:8002/api/docs/openapi.json
