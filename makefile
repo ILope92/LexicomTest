@@ -1,7 +1,6 @@
 all:
 	@echo "make db			- Start postgres container"
 	@echo "make app			- Start app container"
-	@echo "make migrate		- Apply migrate to database"
 	@echo "make devenv      - install enviroment python3.12"
 	@echo "make compose     - build and run app, db services"
 	@exit 0
@@ -16,19 +15,13 @@ devenv: clean
 	# ставим зависимости
 	env/bin/python3.12 -m pip install -r requirements.txt
 
-db:
-	docker stop db-container || true
-	docker-compose run -d -p 3000:8000 --name db-container db
+redis:
+	docker stop redis-container || true
+	docker compose run -d -p 6379:6379 --name redis-container
 
 app:
 	docker stop backend-container || true
-	docker-compose run -d -p 3000:8000 --name backend-container app
-
-autogenerate:
-	alembic upgrade head
-
-migrate:
-	alembic upgrade head
+	docker compose run -d -p 8002:8002 --name backend-container
 
 compose:
-	docker-compose up --build -d
+	docker compose up --build -d

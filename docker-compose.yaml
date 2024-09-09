@@ -1,0 +1,24 @@
+version: '3'
+services:
+    redis:
+        image: redis
+        container_name: redis-container
+        ports:
+            - "6379:6379"
+
+    backend:
+        image: backend
+        container_name: backend-container
+        working_dir: /app
+        env_file:
+            - .local.env
+        build:
+            context: .
+            dockerfile: backend.Dockerfile
+        depends_on:
+            - redis
+        volumes:
+            - ./app:/app
+        ports:
+            - 8002:8002
+        command: uvicorn main:app --host 0.0.0.0 --port 8002
