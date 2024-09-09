@@ -16,3 +16,10 @@ class WriteUpdateSchema(BaseModel):
         except phonenumbers.phonenumberutil.NumberParseException:
             raise PhoneError('invalid phone number format')
         return phonenumbers.format_number(pn, phonenumbers.PhoneNumberFormat.E164)
+
+class AddrResult(BaseModel):
+    address: str
+    
+
+class WriteUpdateResult(BaseModel):
+    result: bool

@@ -5,7 +5,7 @@ from fastapi.responses import JSONResponse
 from redis import asyncio as aioredis
 from redis.typing import ResponseT
 
-from backend.applications.test.schemas import WriteUpdateSchema
+from backend.applications.test.schemas import WriteUpdateSchema, WriteUpdateResult, AddrResult
 from backend.core.redis import get_redis
 from backend.core.loader import Settings
 
@@ -13,7 +13,7 @@ from backend.core.loader import Settings
 router = APIRouter()
 
 
-@router.post("/write_data")
+@router.post("/write_data", response_model=WriteUpdateResult)
 async def write_data(
     body: WriteUpdateSchema,
     redis: aioredis.Redis = Depends(get_redis)
@@ -31,7 +31,7 @@ async def write_data(
     return JSONResponse(content={"result": result}, status_code=status.HTTP_201_CREATED)
 
 
-@router.put("/write_data")
+@router.put("/write_data", response_model=WriteUpdateResult)
 async def write_data(
     body: WriteUpdateSchema,
     redis: aioredis.Redis = Depends(get_redis)
@@ -52,7 +52,7 @@ async def write_data(
 
     return JSONResponse(content={"result": None}, status_code=status.HTTP_404_NOT_FOUND)
 
-@router.get("/check_data")
+@router.get("/check_data", response_model=AddrResult)
 async def check_data(
     phone: str,
     redis: aioredis.Redis = Depends(get_redis)
